@@ -1,23 +1,39 @@
 name: Deploy to GitHub Pages
+
+# Ensure the workflow has explicit permission to write repository contents
+permissions:
+  contents: write
+
 on:
   push:
     branches:
       - main
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout source
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
+
       - name: Install deps
         run: npm ci
+
       - name: Build
         run: npm run build
+
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v4
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
+          publish_branch: gh-pages
+          # Use the default GITHUB_TOKEN (now has contents: write permission)
+          github_token: ${{ secrets.GITHUB_TOKEN }}

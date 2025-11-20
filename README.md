@@ -36,5 +36,5 @@ Notes and suggestions
 - All data is local. To reset or delete data, go to Admin > Reset Data.
 - Starter exercise dataset is included on first run.
 - If you later want cloud sync, the codebase includes an obvious DB abstraction (src/db.js) where a remote sync layer could be added.
-mangos
+mangos hi kev
 ```
